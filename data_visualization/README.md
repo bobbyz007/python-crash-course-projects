@@ -1,4 +1,4 @@
-安装相应的python库：
+Using matplotlib:
 ```shell
 # upgrade six to the latest version
 python3.12 -m pip install six -U
@@ -7,4 +7,12 @@ python3.12 -m pip install six -U
 python3.12 -m pip install --user PyQt5
 
 python3.12 -m pip install --user matplotlib
+```
+
+Using plotly:
+```shell
+python3.12 -m pip install --user plotly
+
+# plotly depends on pandas
+python3.12 -m pip install --user pandas
 ```
