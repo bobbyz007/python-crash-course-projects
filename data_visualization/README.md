@@ -16,3 +16,10 @@ python3.12 -m pip install --user plotly
 # plotly depends on pandas
 python3.12 -m pip install --user pandas
 ```
+
+Using an API:
+```shell
+python3.12 -m pip install --user requests
+# for https SNIMissingWarning
+python3.12 -m pip install --user pyopenssl ndg-httpsclient pyasn1
+```
