@@ -44,6 +44,20 @@ sqlparse 0.4.4
 
 # 启动
 (.venv) justin@KLVC-WXX9:~/ws2/python/PycharmProjects/python-crash-course-projects/web_app$ python manage.py runserver
+```
 
+在项目中创建app：
+```shell
+# 在项目中创建app脚手架文件
+(.venv) justin@KLVC-WXX9:~/ws2/python/PycharmProjects/python-crash-course-projects/web_app$ python manage.py startapp learning_logs
+(.venv) justin@KLVC-WXX9:~/ws2/python/PycharmProjects/python-crash-course-projects/web_app$ ls learning_logs/
+admin.py  apps.py  __init__.py  migrations  models.py  tests.py  views.py
+
+# model数据修改后  需适配数据库
+(.venv) justin@KLVC-WXX9:~/ws2/python/PycharmProjects/python-crash-course-projects/web_app$ python manage.py makemigrations learning_logs
+(.venv) justin@KLVC-WXX9:~/ws2/python/PycharmProjects/python-crash-course-projects/web_app$ python manage.py migrate
+
+# 创建超级用户 ll_admin
+(.venv) justin@KLVC-WXX9:~/ws2/python/PycharmProjects/python-crash-course-projects/web_app$ python manage.py createsuperuser
 
 ```
