@@ -93,3 +93,22 @@ print(arr)
 print(np.where(arr > 0, 2, -2))
 print(np.where(arr > 0, 2, arr))
 
+# Methods for boolean array
+arr = rng.standard_normal(100)
+print((arr > 0).sum())
+bools = np.array([False, False, True, False])
+print(bools.any())
+print(bools.all())
+
+# linear algebra
+x = np.array([[1., 2., 3.], [4., 5., 6.]])
+y = np.array([[6., 23.], [-1, 7], [8, 9]])
+print(x.dot(y))
+
+X = rng.standard_normal((5, 5))
+mat = X.T @ X
+print(mat)
+from numpy.linalg import inv, qr
+print(inv(mat))
+
+print(mat @ inv(mat))
