@@ -94,7 +94,7 @@ housing.plot(kind="scatter", x="longitude", y="latitude", grid=True,
              s=housing["population"] / 100, label="population",  # s denotes the radius of each circle(district)
              c="median_house_value", cmap="jet", colorbar=True,  # c denotes color by median_house_value column value
              legend=True, sharex=True, figsize=(10, 7))
-plt.show()
+# plt.show()
 
 # a more beautiful version of the previous figure
 IMAGES_PATH = Path().absolute().parent / "images" / "end_to_end_project"
@@ -109,7 +109,7 @@ california_img = plt.imread(IMAGES_PATH / "california.png")
 axis = -124.55, -113.95, 32.45, 42.05
 plt.axis(axis)
 plt.imshow(california_img, extent=axis)
-plt.show()
+# plt.show()
 
 # Look for correlations between attributes
 corr_matrix = housing.corr(numeric_only=True)
@@ -122,8 +122,23 @@ scatter_matrix(housing[attributes], figsize=(12, 8))
 # Looking at the correlation scatterplots, it seems like the most promising attribute
 # to predict the median house value is the median income
 housing.plot(kind="scatter", x="median_income", y="median_house_value", alpha=0.1, grid=True)
-plt.show()
+# plt.show()
 
 # rever to a clean training set
 housing = strat_train_set.drop("median_house_value", axis=1)
 housing_labels = strat_train_set["median_house_value"].copy()
+
+# clean the data
+from sklearn.impute import SimpleImputer
+imputer = SimpleImputer(strategy="median")
+housing_num = housing.select_dtypes(include=[np.number])
+imputer.fit(housing_num) # compute median of each attribute
+X = imputer.transform(housing_num)
+
+# Handling text attributes: convert from text to number
+housing_cat = housing[["ocean_proximity"]]
+from sklearn.preprocessing import OrdinalEncoder
+ordinal_encoder = OrdinalEncoder()
+housing_cat_encoded = ordinal_encoder.fit_transform(housing_cat)
+print(housing_cat_encoded[:8])
+
