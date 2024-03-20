@@ -1,5 +1,8 @@
 import pandas as pd
 
+from housing.analyze_data import handle_text_attribute_with_onehot, \
+    handle_text_attribute_with_ordinal, fill_missing_data, find_correlation_between_attributes, \
+    feature_scaling_transfrom
 from housing.download_data import load_housing_data
 from housing.split_data import split_data_with_id_hash, split_data_stratified_shuffle
 from housing.visualize_data import generate_income_category_by_value, visualize_income_category, \
@@ -37,41 +40,19 @@ housing = strat_train_set.copy()
 # visualize_house_value_population_with_image(housing)
 
 # Look for correlations between attributes
-corr_matrix = housing.corr(numeric_only=True)
-print(corr_matrix["median_house_value"].sort_values(ascending=False))
-# another way to check correlation
-from pandas.plotting import scatter_matrix
-attributes = ["median_house_value", "median_income", "total_rooms","housing_median_age"]
-scatter_matrix(housing[attributes], figsize=(12, 8))
-
-# Looking at the correlation scatterplots, it seems like the most promising attribute
-# to predict the median house value is the median income
-housing.plot(kind="scatter", x="median_income", y="median_house_value", alpha=0.1, grid=True)
-# plt.show()
+# find_correlation_between_attributes(housing)
 
 # rever to a clean training set
 housing = strat_train_set.drop("median_house_value", axis=1)
 housing_labels = strat_train_set["median_house_value"].copy()
 
-# clean the data
-from sklearn.impute import SimpleImputer
-imputer = SimpleImputer(strategy="median")
-housing_num = housing.select_dtypes(include=[np.number])
-imputer.fit(housing_num) # compute median of each attribute
-X = imputer.transform(housing_num)
 
+fill_missing_data(housing)
 # Handling text attributes: convert from text to number
-housing_cat = housing[["ocean_proximity"]]
-from sklearn.preprocessing import OrdinalEncoder
-ordinal_encoder = OrdinalEncoder()
-housing_cat_encoded = ordinal_encoder.fit_transform(housing_cat)
-print(housing_cat_encoded[:8])
-
+handle_text_attribute_with_ordinal(housing)
 # encode with binary attribute, sparse matrix
-from sklearn.preprocessing import OneHotEncoder
-cat_encoder = OneHotEncoder()
-housing_cat_1hot = cat_encoder.fit_transform(housing_cat) # row: record, column: attribute category
-print(housing_cat_1hot.toarray())
-# another way: convert categorical feature to one-hot representation
-df_test = pd.DataFrame({"ocean_proximity": ["INLAND", "NEAR BAY"]})
-print(pd.get_dummies(df_test))
+handle_text_attribute_with_onehot(housing)
+
+# feature scaling and transformation
+housing_num = housing.select_dtypes(include=[np.number])
+feature_scaling_transfrom(housing_num)

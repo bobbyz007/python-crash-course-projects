@@ -15,12 +15,14 @@ def generate_income_category_by_value(housing):
     housing["income_cat"] = pd.cut(housing["median_income"], bins=[0., 1.5, 3.0, 4.5, 6., np.inf],
                                    labels=[1, 2, 3, 4, 5])
 
+
 def visualize_income_category(housing):
     housing["income_cat"].value_counts().sort_index().plot.bar(rot=0, grid=True)
     print(housing["income_cat"].value_counts())
     plt.xlabel("Income category")
     plt.ylabel("Number of districts")
     plt.show()
+
 
 def visualize_house_value_population(housing):
     housing.plot(kind="scatter", x="longitude", y="latitude", grid=True, alpha=0.2)
@@ -30,6 +32,7 @@ def visualize_house_value_population(housing):
                  # c denotes color by median_house_value column value
                  legend=True, sharex=True, figsize=(10, 7))
     plt.show()
+
 
 def visualize_house_value_population_with_image(housing):
     # a more beautiful version of the previous figure
