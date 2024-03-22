@@ -6,7 +6,8 @@ from housing.analyze_data import handle_text_attribute_with_onehot, \
 from housing.download_data import load_housing_data
 from housing.split_data import split_data_with_id_hash, split_data_stratified_shuffle
 from housing.visualize_data import generate_income_category_by_value, visualize_income_category, \
-    visualize_house_value_population, visualize_house_value_population_with_image
+    visualize_house_value_population, visualize_house_value_population_with_image, visualize_population_by_log, \
+    visualize_median_age_by_gaussian_rbf
 import numpy as np
 
 # get data frame
@@ -56,3 +57,7 @@ handle_text_attribute_with_onehot(housing)
 # feature scaling and transformation
 housing_num = housing.select_dtypes(include=[np.number])
 feature_scaling_transfrom(housing_num)
+
+# transforming a feature to make it closer to a Gaussian distribution
+# visualize_population_by_log(housing)
+# visualize_median_age_by_gaussian_rbf(housing)
